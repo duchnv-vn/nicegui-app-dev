@@ -1,0 +1,12 @@
+{
+  "name": "NiceGUI-app-dev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.py",
+  "scripts": {
+    "init": "scripts/create-virtual-env.bat",
+    "start": "py src/main.py"
+  },
+  "author": "",
+  "license": "ISC"
+}
