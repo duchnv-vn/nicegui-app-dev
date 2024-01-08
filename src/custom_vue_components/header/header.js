@@ -1,9 +1,11 @@
 export default {
   template: `
   <section class="w-full h-16 px-5 flex items-center justify-between bg-white border-b-4 border-b-blue-500 text-blue-500">
-    <button @click="() => setDisplaySidebar(!isOpenSidebar)">
+    <button
+       v-if="windowWidth <= tabletMaxWidth"
+      @click="() => display_popup_sidebar()"
+    >
       <i
-        v-if="windowWidth <= tabletMaxWidth"
         class="q-icon notranslate material-icons text-2xl"
         aria-hidden="true"
         role="img"
@@ -28,7 +30,6 @@ export default {
       title: 'Nice GUI application',
       windowWidth: window.innerWidth,
       tabletMaxWidth: 1023,
-      isOpenSidebar: false,
     };
   },
   mounted() {
@@ -44,11 +45,8 @@ export default {
     onResize() {
       this.windowWidth = window.innerWidth;
     },
-    setDisplaySidebar(isOpen) {
-      console.log('==================');
-      console.log('isOpen', isOpen);
-      console.log('==================');
-      this.$emit('openSidebar', { isOpen });
+    display_popup_sidebar() {
+      this.$emit('change', null);
     },
   },
   props: {
