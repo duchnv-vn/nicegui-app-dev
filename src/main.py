@@ -1,5 +1,6 @@
+from layout import page_layout
 from nicegui import ui
 
-ui.label('Hello world!')
+page_layout()
 
 ui.run()
