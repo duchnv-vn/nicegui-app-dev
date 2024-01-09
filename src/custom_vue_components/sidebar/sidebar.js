@@ -62,40 +62,29 @@ export default {
       expanseWidth: 200,
       minimizeWidth: 70,
       tabletMaxWidth: 1023,
-      windowWidth: window.innerWidth,
       startDragIndex: null,
     };
   },
-  mounted() {
-    this.$nextTick(() => {
-      window.addEventListener('resize', this.onResize);
-    });
-  },
-
-  beforeDestroy() {
-    window.removeEventListener('resize', this.onResize);
-  },
   computed: {
     clickDisplaySidebarAction() {
-      return this.windowWidth > this.tabletMaxWidth
+      return this.window_width > this.tabletMaxWidth
         ? this.changeSizeSidebar
         : this.display_popup_sidebar;
     },
+    currentSidebarWidth() {
+      return this.isExpanse ? this.expanseWidth : this.minimizeWidth;
+    },
     sidebarWidth() {
-      return this.isExpanse
-        ? `w-[${this.expanseWidth}px]`
-        : `w-[${this.minimizeWidth}px]`;
+      return `w-[${this.currentSidebarWidth}px]`;
     },
   },
   methods: {
     changeSizeSidebar() {
       this.isExpanse = !this.isExpanse;
-    },
-    onResize() {
-      this.windowWidth = window.innerWidth;
+      this.$emit('change_1', this.currentSidebarWidth);
     },
     display_popup_sidebar() {
-      this.$emit('change', null);
+      this.$emit('change_2', null);
     },
     startDrag(startIndex) {
       this.startDragIndex = startIndex;
@@ -118,5 +107,8 @@ export default {
       this.sidebars = cloneSidebar;
       this.startDragIndex = null;
     },
+  },
+  props: {
+    window_width: Number,
   },
 };

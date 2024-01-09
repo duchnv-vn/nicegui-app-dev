@@ -1,9 +1,14 @@
 export default {
   template: `
-  <section class="w-full h-16 px-5 flex items-center justify-between bg-white border-b-4 border-b-blue-500 text-blue-500">
+  <section
+    class="w-full px-5 flex items-center justify-between bg-white border-b-4 border-b-blue-500 text-blue-500"
+    :class="{
+      [headerHeightClassName]: true
+    }"
+  >
     <button
-       v-if="windowWidth <= tabletMaxWidth"
-      @click="() => display_popup_sidebar()"
+       v-if="window_width <= tabletMaxWidth"
+       @click="() => display_popup_sidebar()"
     >
       <i
         class="q-icon notranslate material-icons text-2xl"
@@ -28,28 +33,21 @@ export default {
   data() {
     return {
       title: 'Nice GUI application',
-      windowWidth: window.innerWidth,
       tabletMaxWidth: 1023,
     };
   },
-  mounted() {
-    this.$nextTick(() => {
-      window.addEventListener('resize', this.onResize);
-    });
-  },
-
-  beforeDestroy() {
-    window.removeEventListener('resize', this.onResize);
+  computed: {
+    headerHeightClassName() {
+      return `h-[${this.header_height}px]`;
+    },
   },
   methods: {
-    onResize() {
-      this.windowWidth = window.innerWidth;
-    },
     display_popup_sidebar() {
       this.$emit('change', null);
     },
   },
   props: {
-    openSidebarTrigger: null,
+    header_height: Number,
+    window_width: Number,
   },
 };
